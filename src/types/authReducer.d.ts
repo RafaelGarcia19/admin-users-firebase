@@ -3,6 +3,7 @@ type AuthAction =
 	| { type: 'logout' };
 
 type AuthState = {
+	loggedIn: boolean;
 	token: string | null;
 	username: string;
 	name: string;

@@ -10,6 +10,7 @@ const initialState: AuthState = {
 	username: '',
 	name: '',
 	email: '',
+	loggedIn: false,
 };
 
 export const AuthProvider = ({ children }: props) => {

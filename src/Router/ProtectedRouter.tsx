@@ -9,7 +9,7 @@ type ProtectedRouterProps = {
 export const ProtectedRouter = ({ children }: ProtectedRouterProps) => {
 	const { authState } = useContext(AuthContext);
 
-	if (authState.token) {
+	if (authState.loggedIn) {
 		return <Navigate to='/dashboard' />;
 	}
 

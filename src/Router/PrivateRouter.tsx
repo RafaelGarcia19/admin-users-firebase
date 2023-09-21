@@ -9,7 +9,7 @@ type PrivateRouterProps = {
 export const PrivateRouter = ({ children }: PrivateRouterProps) => {
 	const { authState } = useContext(AuthContext);
 
-	if (authState.token === '') {
+	if (!authState.loggedIn) {
 		return <Navigate to='/login' />;
 	}
 
