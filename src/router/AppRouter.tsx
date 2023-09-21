@@ -1,8 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { Navbar } from '../components';
 import { HomePage, LoginPage, RegisterPage, Dashboard } from '../pages';
-import { PrivateRouter } from './PrivateRouter';
-import { ProtectedRouter } from './ProtectedRouter';
+import { PrivateGuard, ProtectedGuard } from './guards';
 
 export const AppRouter = () => {
 	return (
@@ -13,18 +12,18 @@ export const AppRouter = () => {
 					<Route
 						path='login'
 						element={
-							<ProtectedRouter>
+							<ProtectedGuard>
 								<LoginPage />
-							</ProtectedRouter>
+							</ProtectedGuard>
 						}
 					/>
 					<Route path='register' element={<RegisterPage />} />
 					<Route
 						path='dashboard'
 						element={
-							<PrivateRouter>
+							<PrivateGuard>
 								<Dashboard />
-							</PrivateRouter>
+							</PrivateGuard>
 						}
 					/>
 				</Route>

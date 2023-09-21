@@ -6,16 +6,15 @@ export const authReducer = (
 		case 'login':
 			return {
 				...state,
-				name: action.payload.name,
-				email: action.payload.email,
-				token: action.payload.token,
+				...action.payload,
 			};
 		case 'logout':
 			return {
-				...state,
-				name: '',
+				username: '',
+				token: '',
 				email: '',
-				token: null,
+				loggedIn: false,
+				name: '',
 			};
 		default:
 			return state;

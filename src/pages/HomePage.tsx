@@ -5,8 +5,7 @@ export const HomePage = () => {
 				Bienvenido a Mi Sitio Web
 			</h1>
 			<p className='text-lg text-center'>
-				¡Esta es la página de inicio de mi sitio web! Aquí puedes agregar
-				contenido o información relevante.
+				¡Esta es la página de inicio de mi sitio web!
 			</p>
 		</div>
 	);

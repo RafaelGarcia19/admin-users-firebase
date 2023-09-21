@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import { AuthContext } from '../context';
+import { AuthContext } from '../../context';
 
-type PrivateRouterProps = {
+type PrivateGuardProps = {
 	children: JSX.Element | JSX.Element[];
 };
 
-export const PrivateRouter = ({ children }: PrivateRouterProps) => {
+export const PrivateGuard = ({ children }: PrivateGuardProps) => {
 	const { authState } = useContext(AuthContext);
 
 	if (!authState.loggedIn) {
