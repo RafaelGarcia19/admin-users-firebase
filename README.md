@@ -1,27 +1,64 @@
-# React + TypeScript + Vite
+# Users admin ract + typescript + firestore
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Esta aplicación utiliza React, TypeScript y Firebase para administrar usuarios dentro de la aplicación. Utiliza la autenticación de Firebase y guarda los datos en Firestore.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Configuración
 
-## Expanding the ESLint configuration
+Antes de poder utilizar esta aplicación, asegúrate de seguir estos pasos:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Crea un archivo llamado `firebase.json` en la raíz del proyecto.
 
-- Configure the top-level `parserOptions` property like this:
+2. En el archivo `firebase.json`, coloca las credenciales de Firebase siguiendo el formato de ejemplo en `firebase.json.example`. Estas credenciales son necesarias para que la aplicación se comunique con Firebase.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+## Instalación de Dependencias
+
+Puedes instalar las dependencias de la aplicación utilizando npm, yarn o pnpm. Aquí tienes ejemplos de cómo hacerlo:
+
+``` bash
+# Instalar dependencias con npm
+npm install
+
+# Instalar dependencias con yarn
+yarn install
+
+# Instalar dependencias con pnpm
+pnpm install
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Ejecución en Modo Desarrollo
+
+Para ejecutar la aplicación en modo desarrollo, utiliza el siguiente comando:
+
+``` bash
+# Ejecutar en modo desarrollo con npm
+npm run dev
+
+# Ejecutar en modo desarrollo con yarn
+yarn dev
+
+# Ejecutar en modo desarrollo con pnpm
+pnpm dev
+
+```
+
+## Construcción de la Aplicación
+
+Si deseas construir la aplicación para producción, puedes utilizar el siguiente comando:
+
+``` bash
+# Construir la aplicación con npm
+npm run build
+
+# Construir la aplicación con yarn
+yarn build
+
+# Construir la aplicación con pnpm
+pnpm build
+
+```
+
+## Autor
+
+Esta aplicación fue desarrollada por Rafael Garcia. Puedes encontrar más proyectos en su perfil de GitHub: [Rafaelgarcia19](https://github.com/RafaelGarcia19)
+
