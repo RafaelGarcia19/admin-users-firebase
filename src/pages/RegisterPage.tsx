@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useAuth, useForm } from '../hooks';
+import { useNavigate } from 'react-router-dom';
 type LoginFormData = {
 	name: string;
 	email: string;
@@ -15,6 +16,7 @@ export const RegisterPage = () => {
 		});
 
 	const { handleRegister, clearError, error } = useAuth();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		clearError();
@@ -24,6 +26,7 @@ export const RegisterPage = () => {
 		e.preventDefault();
 		handleRegister(email, password, name);
 		onResetForm();
+		if (!error) navigate('/dashboard');
 	};
 
 	return (

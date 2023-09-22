@@ -15,7 +15,6 @@ import {
 	Timestamp,
 } from 'firebase/firestore';
 import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context';
 import { auth, firestore } from '../db/firebase';
 
@@ -27,7 +26,6 @@ type User = {
 
 export const useAuth = () => {
 	const [error, setError] = useState<string | null>(null);
-	const navigate = useNavigate();
 	const { onLogin, onLogout, authState } = useContext(AuthContext);
 
 	const clearError = () => setError(null);
@@ -67,7 +65,6 @@ export const useAuth = () => {
 			});
 			handleLogs('registerSuccess', `User ${email} registered`);
 			handleLogs('loginSuccess', `User ${email} logged in`);
-			navigate('/dashboard');
 		} catch (error: FirebaseError | unknown) {
 			const errorString = (error as FirebaseError).code;
 			setError(errorString);
@@ -86,7 +83,6 @@ export const useAuth = () => {
 				'deleteUserSuccess',
 				`User ${uid} deleted by ${authState.email}`,
 			);
-			navigate('/dashboard');
 		} catch (error: FirebaseError | unknown) {
 			const errorString = (error as FirebaseError).code;
 			setError(errorString);
@@ -106,7 +102,6 @@ export const useAuth = () => {
 				uid,
 			});
 			handleLogs('editUserSuccess', `User ${uid} edited`);
-			navigate('/dashboard');
 		} catch (error: FirebaseError | unknown) {
 			const errorString = (error as FirebaseError).code;
 			setError(errorString);
@@ -134,7 +129,6 @@ export const useAuth = () => {
 					loggedIn: true,
 				});
 				handleLogs('loginSuccess', `User ${email} logged in`);
-				navigate('/dashboard');
 			} else {
 				setError('User data incomplete');
 				handleLogs(
@@ -157,7 +151,6 @@ export const useAuth = () => {
 		try {
 			await sendPasswordResetEmail(auth, email);
 			handleLogs('resetPasswordSuccess', `User ${email} reset password`);
-			navigate('/login');
 		} catch (error) {
 			setError(error instanceof FirebaseError ? error.code : 'Unknown error');
 			handleLogs(
@@ -186,7 +179,6 @@ export const useAuth = () => {
 			});
 			await sendPasswordResetEmail(auth, email);
 			handleLogs('addUserSuccess', `User ${email} added by ${authState.email}`);
-			navigate('/dashboard');
 		} catch (error) {
 			setError(error instanceof FirebaseError ? error.code : 'Unknown error');
 			handleLogs(
@@ -203,7 +195,6 @@ export const useAuth = () => {
 			'logoutSuccess',
 			`User ${authState.email} logged out successfully from ${window.location}`,
 		);
-		navigate('/');
 	};
 
 	const getUsers = async (): Promise<User[]> => {

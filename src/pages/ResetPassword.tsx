@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth, useForm } from '../hooks';
 
 type ResetFormData = {
@@ -13,10 +13,13 @@ export const ResetPassword = () => {
 			email: '',
 		});
 
+	const navigate = useNavigate();
+
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		handleResetPassword(email);
 		onResetForm();
+		if (!error) navigate('/login');
 	};
 
 	useEffect(() => {

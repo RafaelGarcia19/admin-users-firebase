@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth, useForm } from '../hooks';
 
 export const AddUser = () => {
-	const { handleAddUser } = useAuth();
-	const navigator = useNavigate();
+	const { handleAddUser, error } = useAuth();
+	const navigate = useNavigate();
 
 	const { formState, onInputChange, onResetForm } = useForm({
 		name: '',
@@ -14,6 +14,7 @@ export const AddUser = () => {
 		e.preventDefault();
 		await handleAddUser(formState);
 		onResetForm();
+		if (!error) navigate('/dashboard');
 	};
 
 	const { name, email } = formState;
@@ -47,6 +48,7 @@ export const AddUser = () => {
 							required
 						/>
 					</div>
+					{error && <div className='text-red-500'>{error}</div>}
 					<div className='flex justify-end'>
 						<button
 							type='submit'
@@ -58,7 +60,7 @@ export const AddUser = () => {
 							className='bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded'
 							onClick={() => {
 								// Agrega la lógica para cancelar la creación o redirigir según tus necesidades
-								navigator('/dashboard');
+								navigate('/dashboard');
 							}}
 						>
 							Cancelar

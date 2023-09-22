@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context';
 import { NavLinks, MobileNavLinks } from '.';
 import { useAuth } from '../hooks';
@@ -10,6 +10,7 @@ export const Navbar: React.FC = () => {
 	const { handleLogout } = useAuth();
 	const { loggedIn, name } = authState;
 
+	const navigate = useNavigate();
 	const toggleMenu = () => {
 		setShowMenu(!showMenu);
 	};
@@ -19,6 +20,11 @@ export const Navbar: React.FC = () => {
 		{ label: 'Log in', to: '/login' },
 		{ label: 'Registrarse', to: '/register' },
 	];
+
+	const handleLogoutButton = () => {
+		handleLogout();
+		navigate('/');
+	};
 
 	const authenticatedLinks = [{ label: 'Dashboard', to: '/dashboard' }];
 
@@ -62,7 +68,7 @@ export const Navbar: React.FC = () => {
 								<NavLinks links={authenticatedLinks} />
 								<li>
 									<a
-										onClick={handleLogout}
+										onClick={handleLogoutButton}
 										className='text-white hover:text-blue-200 cursor-pointer'
 									>
 										Logout
@@ -82,7 +88,7 @@ export const Navbar: React.FC = () => {
 							{loggedIn && (
 								<li>
 									<a
-										onClick={handleLogout}
+										onClick={handleLogoutButton}
 										className='text-white hover:text-blue-200 cursor-pointer'
 									>
 										Logout

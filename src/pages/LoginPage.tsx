@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth, useForm } from '../hooks';
 type LoginFormData = {
 	email: string;
@@ -13,6 +13,8 @@ export const LoginPage = () => {
 			email: '',
 			password: '',
 		});
+
+	const navigate = useNavigate();
 	useEffect(() => {
 		clearError();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -22,6 +24,7 @@ export const LoginPage = () => {
 		e.preventDefault();
 		handleLogin(email, password);
 		onResetForm();
+		if (!error) navigate('/dashboard');
 	};
 	return (
 		<div className='min-h-screen flex items-center justify-center bg-gray-100'>

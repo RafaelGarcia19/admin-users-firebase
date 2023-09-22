@@ -10,8 +10,8 @@ type User = {
 
 export const EditUser = () => {
 	const { userid = '' } = useParams<{ userid?: string }>();
-	const { getUser, handleEditUser } = useAuth();
-	const navigator = useNavigate();
+	const { error, getUser, handleEditUser } = useAuth();
+	const navigate = useNavigate();
 	const [isFormVisible, setIsFormVisible] = useState(false);
 
 	const { name, email, onInputChange, setFormState, onResetForm } = useForm({
@@ -24,7 +24,7 @@ export const EditUser = () => {
 		const userData = await getUser(userid);
 
 		if (!userData) {
-			navigator('/dashboard/');
+			navigate('/dashboard/');
 		}
 		setFormState(userData as User);
 		setIsFormVisible(true);
@@ -38,6 +38,7 @@ export const EditUser = () => {
 		e.preventDefault();
 		handleEditUser(userid, name, email);
 		onResetForm();
+		if (!error) navigate('/dashboard');
 	};
 
 	if (!isFormVisible) {
@@ -70,6 +71,7 @@ export const EditUser = () => {
 							className='w-full border rounded-md p-2'
 						/>
 					</div>
+					{error && <div className='text-red-500'>{error}</div>}
 					<div className='flex justify-end'>
 						<button
 							type='submit'

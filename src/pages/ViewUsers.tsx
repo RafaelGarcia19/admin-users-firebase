@@ -39,6 +39,7 @@ export const ViewUsers = () => {
 			getUsersData();
 		}
 		setIsDeleteModalOpen(false);
+		if (!error) navigate('/dashboard');
 	};
 
 	const cancelDelete = () => {
