@@ -1,20 +1,20 @@
-import { Routes, Route } from 'react-router-dom';
-import { Navbar } from '../components';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { DashboardLayout, NavbarLayout } from '../layouts';
 import {
 	HomePage,
 	LoginPage,
 	RegisterPage,
-	Dashboard,
 	ResetPassword,
+	ViewUsers,
 } from '../pages';
-import { PrivateGuard, ProtectedGuard } from './guards';
 import { NotFound } from '../pages/NotFound';
+import { PrivateGuard, ProtectedGuard } from './guards';
 
 export const AppRouter = () => {
 	return (
 		<>
 			<Routes>
-				<Route path='/' element={<Navbar />}>
+				<Route path='/' element={<NavbarLayout />}>
 					<Route index element={<HomePage />} />
 					<Route
 						path='login'
@@ -40,16 +40,22 @@ export const AppRouter = () => {
 							</ProtectedGuard>
 						}
 					/>
-					<Route
-						path='dashboard'
-						element={
-							<PrivateGuard>
-								<Dashboard />
-							</PrivateGuard>
-						}
-					/>
-					<Route path='*' element={<NotFound />} />
 				</Route>
+				<Route
+					path='/dashboard/*'
+					element={
+						<PrivateGuard>
+							<DashboardLayout />
+						</PrivateGuard>
+					}
+				>
+					<Route index element={<ViewUsers />} />
+					<Route path='add-user' element={<div>Add User</div>} />
+					<Route path='edit-user' element={<div>Edit User</div>} />
+					<Route path='delete-user' element={<div>Delete User</div>} />
+					<Route path='*' element={<Navigate to='/dashboard/' />} />
+				</Route>
+				<Route path='*' element={<NotFound />} />
 			</Routes>
 		</>
 	);

@@ -13,10 +13,10 @@ export const LoginPage = () => {
 			email: '',
 			password: '',
 		});
-
 	useEffect(() => {
 		clearError();
-	}, [clearError, formState]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [formState]);
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -66,7 +66,11 @@ export const LoginPage = () => {
 							¿Olvidaste tu contraseña?
 						</NavLink>
 					</div>
-					{error}
+					{error && (
+						<div className='text-red-500 text-sm mb-4 flex flex-col justify-center align-center'>
+							{error}
+						</div>
+					)}
 					<button
 						type='submit'
 						className='w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-300'
