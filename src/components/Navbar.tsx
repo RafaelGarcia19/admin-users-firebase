@@ -2,10 +2,12 @@ import React, { useContext, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { AuthContext } from '../context';
 import { NavLinks, MobileNavLinks } from '.';
+import { useAuth } from '../hooks';
 
 export const Navbar: React.FC = () => {
 	const [showMenu, setShowMenu] = useState(false);
-	const { authState, onLogout } = useContext(AuthContext);
+	const { authState } = useContext(AuthContext);
+	const { handleLogout } = useAuth();
 	const { loggedIn, name } = authState;
 
 	const toggleMenu = () => {
@@ -64,7 +66,7 @@ export const Navbar: React.FC = () => {
 									<NavLinks links={authenticatedLinks} />
 									<li>
 										<a
-											onClick={onLogout}
+											onClick={handleLogout}
 											className='text-white hover:text-blue-200 cursor-pointer'
 										>
 											Logout
@@ -84,7 +86,7 @@ export const Navbar: React.FC = () => {
 								{loggedIn && (
 									<li>
 										<a
-											onClick={onLogout}
+											onClick={handleLogout}
 											className='text-white hover:text-blue-200 cursor-pointer'
 										>
 											Logout
