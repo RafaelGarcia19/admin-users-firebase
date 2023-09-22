@@ -10,3 +10,5 @@ type AuthLogAction =
     | 'deleteUserFailure'
     | 'editUserSuccess'
     | 'editUserFailure'
+    | 'addUserSuccess'
+    | 'addUserFailure'

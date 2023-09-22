@@ -3,7 +3,6 @@ import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 	sendPasswordResetEmail,
-	deleteUser,
 } from 'firebase/auth';
 import {
 	doc,
@@ -83,14 +82,17 @@ export const useAuth = () => {
 		try {
 			const userDocRef = doc(firestore, 'users', uid);
 			await deleteDoc(userDocRef);
-			handleLogs('deleteUserSuccess', `User ${uid} deleted`);
+			handleLogs(
+				'deleteUserSuccess',
+				`User ${uid} deleted by ${authState.email}`,
+			);
 			navigate('/dashboard');
 		} catch (error: FirebaseError | unknown) {
 			const errorString = (error as FirebaseError).code;
 			setError(errorString);
 			handleLogs(
 				'deleteUserFailure',
-				`User ${uid} failed to delete, error: ${errorString}`,
+				`User ${uid} failed to delete, error: ${errorString} by ${authState.email}`,
 			);
 		}
 	};
@@ -165,6 +167,35 @@ export const useAuth = () => {
 		}
 	};
 
+	type AddUser = {
+		name: string;
+		email: string;
+	};
+
+	const handleAddUser = async ({ name, email }: AddUser) => {
+		try {
+			const { user } = await createUserWithEmailAndPassword(
+				auth,
+				email,
+				Math.random().toString(36).substring(7),
+			);
+			await setDoc(doc(firestore, 'users', user.uid), {
+				name,
+				email,
+				uid: user.uid,
+			});
+			await sendPasswordResetEmail(auth, email);
+			handleLogs('addUserSuccess', `User ${email} added by ${authState.email}`);
+			navigate('/dashboard');
+		} catch (error) {
+			setError(error instanceof FirebaseError ? error.code : 'Unknown error');
+			handleLogs(
+				'addUserFailure',
+				`User ${email} failed to add, error: ${error} by ${authState.email}`,
+			);
+		}
+	};
+
 	const handleLogout = () => {
 		auth.signOut();
 		onLogout();
@@ -203,6 +234,7 @@ export const useAuth = () => {
 		handleLogout,
 		handleDeleteUser,
 		handleEditUser,
+		handleAddUser,
 		getUsers,
 		getUser,
 	};
