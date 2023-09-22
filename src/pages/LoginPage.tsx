@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import { useAuth, useForm } from '../hooks';
 type LoginFormData = {
 	email: string;
@@ -58,9 +59,12 @@ export const LoginPage = () => {
 					</div>
 
 					<div className='mb-4'>
-						<a href='#' className='text-blue-500 hover:underline text-sm'>
+						<NavLink
+							to='/reset-password'
+							className='text-blue-500 hover:underline text-sm'
+						>
 							¿Olvidaste tu contraseña?
-						</a>
+						</NavLink>
 					</div>
 					{error}
 					<button

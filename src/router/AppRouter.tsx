@@ -8,6 +8,7 @@ import {
 	ResetPassword,
 } from '../pages';
 import { PrivateGuard, ProtectedGuard } from './guards';
+import { NotFound } from '../pages/NotFound';
 
 export const AppRouter = () => {
 	return (
@@ -47,6 +48,7 @@ export const AppRouter = () => {
 							</PrivateGuard>
 						}
 					/>
+					<Route path='*' element={<NotFound />} />
 				</Route>
 			</Routes>
 		</>

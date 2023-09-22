@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import { useAuth, useForm } from '../hooks';
 
 type ResetFormData = {
@@ -42,6 +43,14 @@ export const ResetPassword = () => {
 							className='w-full p-2 border rounded'
 							required
 						/>
+					</div>
+					<div className='mb-4'>
+						<NavLink
+							to='/login'
+							className='text-blue-500 hover:underline text-sm'
+						>
+							Iniciar sesión
+						</NavLink>
 					</div>
 					{error}
 					<button
