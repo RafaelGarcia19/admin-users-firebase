@@ -1,31 +1,31 @@
 import { useEffect } from 'react';
 import { useAuth, useForm } from '../hooks';
-type LoginFormData = {
+
+type ResetFormData = {
 	email: string;
-	password: string;
 };
 
-export const LoginPage = () => {
-	const { error, handleLogin, clearError } = useAuth();
-	const { formState, onInputChange, email, password, onResetForm } =
-		useForm<LoginFormData>({
+export const ResetPassword = () => {
+	const { error, handleResetPassword, clearError } = useAuth();
+	const { formState, onInputChange, email, onResetForm } =
+		useForm<ResetFormData>({
 			email: '',
-			password: '',
 		});
+
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		handleResetPassword(email);
+		onResetForm();
+	};
 
 	useEffect(() => {
 		clearError();
 	}, [clearError, formState]);
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		handleLogin(email, password);
-		onResetForm();
-	};
 	return (
 		<div className='min-h-screen flex items-center justify-center bg-gray-100'>
 			<div className='bg-white p-8 rounded shadow-md w-80'>
-				<h2 className='text-2xl font-bold mb-4'>Iniciar sesión</h2>
+				<h2 className='text-2xl font-bold mb-4'>Restablecer contraseña</h2>
 				<form
 					onSubmit={handleSubmit}
 					className='flex flex-col justify-center align-center'
@@ -43,31 +43,12 @@ export const LoginPage = () => {
 							required
 						/>
 					</div>
-					<div className='mb-4 flex flex-col justify-center align-center'>
-						<label htmlFor='password' className='block text-gray-600'>
-							Contraseña
-						</label>
-						<input
-							type='password'
-							name='password'
-							onChange={onInputChange}
-							value={password}
-							className='w-full p-2 border rounded'
-							required
-						/>
-					</div>
-
-					<div className='mb-4'>
-						<a href='#' className='text-blue-500 hover:underline text-sm'>
-							¿Olvidaste tu contraseña?
-						</a>
-					</div>
 					{error}
 					<button
 						type='submit'
 						className='w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-300'
 					>
-						Iniciar sesión
+						Restarblecer contraseña
 					</button>
 				</form>
 			</div>

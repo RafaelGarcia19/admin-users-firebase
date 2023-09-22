@@ -10,7 +10,6 @@ export const authReducer = (
 			};
 		case 'logout':
 			return {
-				username: '',
 				token: '',
 				email: '',
 				loggedIn: false,

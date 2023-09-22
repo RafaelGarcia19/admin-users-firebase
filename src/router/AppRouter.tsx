@@ -1,6 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
 import { Navbar } from '../components';
-import { HomePage, LoginPage, RegisterPage, Dashboard } from '../pages';
+import {
+	HomePage,
+	LoginPage,
+	RegisterPage,
+	Dashboard,
+	ResetPassword,
+} from '../pages';
 import { PrivateGuard, ProtectedGuard } from './guards';
 
 export const AppRouter = () => {
@@ -22,6 +28,14 @@ export const AppRouter = () => {
 						element={
 							<ProtectedGuard>
 								<RegisterPage />
+							</ProtectedGuard>
+						}
+					/>
+					<Route
+						path='reset-password'
+						element={
+							<ProtectedGuard>
+								<ResetPassword />
 							</ProtectedGuard>
 						}
 					/>

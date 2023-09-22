@@ -7,7 +7,6 @@ interface props {
 
 const initialState: AuthState = {
 	token: '',
-	username: '',
 	name: '',
 	email: '',
 	loggedIn: false,
