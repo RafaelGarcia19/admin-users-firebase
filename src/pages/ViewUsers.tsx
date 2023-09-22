@@ -49,38 +49,40 @@ export const ViewUsers = () => {
 
 	return (
 		<div className='flex justify-center items-center h-full flex-col'>
-			<table className='min-w-full border-collapse table-auto'>
-				<thead>
-					<tr>
-						<th className='px-4 py-2 bg-gray-800 text-white'>Nombre</th>
-						<th className='px-4 py-2 bg-gray-800 text-white'>Email</th>
-						<th className='px-4 py-2 bg-gray-800 text-white'>Acciones</th>
-					</tr>
-				</thead>
-				<tbody>
-					{users.map((user) => (
-						<tr key={user.uid}>
-							<td className='border px-4 py-2'>{user.name}</td>
-							<td className='border px-4 py-2'>{user.email}</td>
-							<td className='border px-4 py-2'>
-								<button
-									className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2'
-									onClick={() => handleEdit(user)}
-								>
-									Editar
-								</button>
-								<button
-									className='bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded'
-									onClick={() => handleDelete(user)}
-								>
-									Eliminar
-								</button>
-								{/* Agrega más acciones según tus necesidades */}
-							</td>
+			<div className='overflow-x-auto'>
+				<table className='min-w-full border-collapse table-auto'>
+					<thead>
+						<tr>
+							<th className='px-4 py-2 bg-gray-800 text-white'>Nombre</th>
+							<th className='px-4 py-2 bg-gray-800 text-white'>Email</th>
+							<th className='px-4 py-2 bg-gray-800 text-white'>Acciones</th>
 						</tr>
-					))}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{users.map((user) => (
+							<tr key={user.uid}>
+								<td className='border px-4 py-2'>{user.name}</td>
+								<td className='border px-4 py-2'>{user.email}</td>
+								<td className='border px-4 py-2'>
+									<button
+										className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2'
+										onClick={() => handleEdit(user)}
+									>
+										Editar
+									</button>
+									<button
+										className='bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded'
+										onClick={() => handleDelete(user)}
+									>
+										Eliminar
+									</button>
+									{/* Agrega más acciones según tus necesidades */}
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
 			{error && (
 				<div className='text-red-500 text-sm mb-4 flex flex-col justify-center align-center'>
 					{error}

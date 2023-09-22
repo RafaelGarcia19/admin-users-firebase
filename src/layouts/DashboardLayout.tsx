@@ -31,7 +31,9 @@ export const DashboardLayout = () => {
 											to={link.to}
 											className={({ isActive }) => {
 												return `hover:text-gray-400 ${
-													isActive ? 'text-gray-600' : 'text-gray-800'
+													isActive
+														? 'text-gray-900 font-semibold'
+														: 'text - gray - 400'
 												}  `;
 											}}
 										>
