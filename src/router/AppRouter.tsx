@@ -9,6 +9,7 @@ import {
 } from '../pages';
 import { NotFound } from '../pages/NotFound';
 import { PrivateGuard, ProtectedGuard } from './guards';
+import { EditUser } from '../pages/EditUser';
 
 export const AppRouter = () => {
 	return (
@@ -51,8 +52,7 @@ export const AppRouter = () => {
 				>
 					<Route index element={<ViewUsers />} />
 					<Route path='add-user' element={<div>Add User</div>} />
-					<Route path='edit-user' element={<div>Edit User</div>} />
-					<Route path='delete-user' element={<div>Delete User</div>} />
+					<Route path='edit-user/:userid' element={<EditUser />} />
 					<Route path='*' element={<Navigate to='/dashboard/' />} />
 				</Route>
 				<Route path='*' element={<NotFound />} />

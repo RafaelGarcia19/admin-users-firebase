@@ -3,12 +3,15 @@ import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 	sendPasswordResetEmail,
+	deleteUser,
 } from 'firebase/auth';
 import {
 	doc,
 	setDoc,
 	getDoc,
+	getDocs,
 	addDoc,
+	deleteDoc,
 	collection,
 	Timestamp,
 } from 'firebase/firestore';
@@ -16,6 +19,12 @@ import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context';
 import { auth, firestore } from '../db/firebase';
+
+type User = {
+	uid: string;
+	name: string;
+	email: string;
+};
 
 export const useAuth = () => {
 	const [error, setError] = useState<string | null>(null);
@@ -66,6 +75,42 @@ export const useAuth = () => {
 			handleLogs(
 				'registerFailure',
 				`User ${email} failed to register, error: ${errorString}`,
+			);
+		}
+	};
+
+	const handleDeleteUser = async (uid: string) => {
+		try {
+			const userDocRef = doc(firestore, 'users', uid);
+			await deleteDoc(userDocRef);
+			handleLogs('deleteUserSuccess', `User ${uid} deleted`);
+			navigate('/dashboard');
+		} catch (error: FirebaseError | unknown) {
+			const errorString = (error as FirebaseError).code;
+			setError(errorString);
+			handleLogs(
+				'deleteUserFailure',
+				`User ${uid} failed to delete, error: ${errorString}`,
+			);
+		}
+	};
+
+	const handleEditUser = async (uid: string, name: string, email: string) => {
+		try {
+			const userDocRef = doc(firestore, 'users', uid);
+			await setDoc(userDocRef, {
+				name,
+				email,
+				uid,
+			});
+			handleLogs('editUserSuccess', `User ${uid} edited`);
+			navigate('/dashboard');
+		} catch (error: FirebaseError | unknown) {
+			const errorString = (error as FirebaseError).code;
+			setError(errorString);
+			handleLogs(
+				'editUserFailure',
+				`User ${uid} failed to edit, error: ${errorString}`,
 			);
 		}
 	};
@@ -130,6 +175,25 @@ export const useAuth = () => {
 		navigate('/');
 	};
 
+	const getUsers = async (): Promise<User[]> => {
+		const usersRef = collection(firestore, 'users');
+		const usersSnap = await getDocs(usersRef);
+		const users: User[] = [];
+		usersSnap.forEach((user) => {
+			users.push(user.data() as User);
+		});
+		return users;
+	};
+
+	const getUser = async (uid: string): Promise<User | null> => {
+		const userDocRef = doc(firestore, 'users', uid);
+		const userSnap = await getDoc(userDocRef);
+		if (userSnap.exists()) {
+			return userSnap.data() as User;
+		}
+		return null;
+	};
+
 	return {
 		error,
 		clearError,
@@ -137,5 +201,9 @@ export const useAuth = () => {
 		handleLogin,
 		handleResetPassword,
 		handleLogout,
+		handleDeleteUser,
+		handleEditUser,
+		getUsers,
+		getUser,
 	};
 };

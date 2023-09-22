@@ -6,3 +6,7 @@ type AuthLogAction =
     | 'resetPasswordFailure'
     | 'registerSuccess'
     | 'registerFailure'
+    | 'deleteUserSuccess'
+    | 'deleteUserFailure'
+    | 'editUserSuccess'
+    | 'editUserFailure'

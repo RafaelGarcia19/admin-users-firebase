@@ -5,8 +5,6 @@ import { Navbar } from '../components';
 const secctionsLinks = [
 	{ label: 'Ver usuarios', to: '/dashboard/' },
 	{ label: 'Agregar usuario', to: '/dashboard/add-user' },
-	{ label: 'Editar usuarios', to: '/dashboard/edit-user' },
-	{ label: 'Eliminar usuarios', to: '/dashboard/delete-user' },
 ];
 
 export const DashboardLayout = () => {
@@ -47,7 +45,7 @@ export const DashboardLayout = () => {
 
 					<div className='md:col-span-3 bg-white p-4 shadow-md'>
 						<button onClick={toggleSidebar} className='md:hidden'>
-							{showSidebar ? 'Ocultar Barra Lateral' : 'Mostrar Barra Lateral'}
+							{showSidebar ? 'Ocultar Navegacion' : 'Mostrar Navegacion'}
 						</button>
 						<Outlet />
 					</div>
