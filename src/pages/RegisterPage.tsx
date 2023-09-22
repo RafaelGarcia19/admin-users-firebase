@@ -1,3 +1,10 @@
+import { FirebaseError } from 'firebase/app';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context';
+import { auth, firestore } from '../db/firebase';
 import { useForm } from '../hooks';
 type LoginFormData = {
 	name: string;
@@ -12,11 +19,52 @@ export const RegisterPage = () => {
 			email: '',
 			password: '',
 		});
+
+	const [error, setError] = useState<string | null>(null);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		setError(null);
+	}, [formState]);
+
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log({ formState });
+		if (!email || !password || !name) {
+			setError('Por favor, llene todos los campos');
+			return;
+		}
+		handleRegister();
 		onResetForm();
 	};
+
+	const { onLogin } = useContext(AuthContext);
+
+	const handleRegister = async () => {
+		try {
+			const { user } = await createUserWithEmailAndPassword(
+				auth,
+				email,
+				password,
+			);
+
+			await setDoc(doc(firestore, 'users', user.uid), {
+				name,
+				email,
+				uid: user.uid,
+			});
+			const idToken = await user.getIdToken();
+			onLogin({
+				name,
+				email,
+				token: idToken,
+				loggedIn: true,
+			});
+			navigate('/dashboard');
+		} catch (error: FirebaseError | unknown) {
+			setError((error as FirebaseError).code);
+		}
+	};
+
 	return (
 		<div className='min-h-screen flex items-center justify-center bg-gray-100'>
 			<div className='bg-white p-8 rounded shadow-md w-80'>
@@ -64,6 +112,13 @@ export const RegisterPage = () => {
 							required
 						/>
 					</div>
+					{/* Error alert */}
+					{error && (
+						<div className='text-red-500 text-sm mb-4 flex flex-col justify-center align-center'>
+							{error}
+						</div>
+					)}
+
 					<button
 						type='submit'
 						className='w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-300'

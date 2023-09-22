@@ -17,7 +17,14 @@ export const AppRouter = () => {
 							</ProtectedGuard>
 						}
 					/>
-					<Route path='register' element={<RegisterPage />} />
+					<Route
+						path='register'
+						element={
+							<ProtectedGuard>
+								<RegisterPage />
+							</ProtectedGuard>
+						}
+					/>
 					<Route
 						path='dashboard'
 						element={

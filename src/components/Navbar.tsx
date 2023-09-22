@@ -5,8 +5,8 @@ import { NavLinks, MobileNavLinks } from '.';
 
 export const Navbar: React.FC = () => {
 	const [showMenu, setShowMenu] = useState(false);
-	const { authState } = useContext(AuthContext);
-	const { username } = authState;
+	const { authState, onLogout } = useContext(AuthContext);
+	const { loggedIn, name } = authState;
 
 	const toggleMenu = () => {
 		setShowMenu(!showMenu);
@@ -18,10 +18,7 @@ export const Navbar: React.FC = () => {
 		{ label: 'Registrarse', to: '/register' },
 	];
 
-	const authenticatedLinks = [
-		{ label: 'Dashboard', to: '/dashboard' },
-		{ label: 'Logout', to: '/logout' },
-	];
+	const authenticatedLinks = [{ label: 'Dashboard', to: '/dashboard' }];
 
 	return (
 		<>
@@ -59,12 +56,20 @@ export const Navbar: React.FC = () => {
 						<ul
 							className={`hidden lg:flex space-x-4 ${showMenu ? 'hidden' : ''}`}
 						>
-							{username ? (
+							{loggedIn ? (
 								<>
 									<li>
-										<div className='text-white'>{username}</div>
+										<div className='text-white'>{name}</div>
 									</li>
 									<NavLinks links={authenticatedLinks} />
+									<li>
+										<a
+											onClick={onLogout}
+											className='text-white hover:text-blue-200 cursor-pointer'
+										>
+											Logout
+										</a>
+									</li>
 								</>
 							) : (
 								<NavLinks links={links} />
@@ -75,7 +80,17 @@ export const Navbar: React.FC = () => {
 					{showMenu && (
 						<div className='lg:hidden'>
 							<ul className='text-white'>
-								<MobileNavLinks links={username ? authenticatedLinks : links} />
+								<MobileNavLinks links={loggedIn ? authenticatedLinks : links} />
+								{loggedIn && (
+									<li>
+										<a
+											onClick={onLogout}
+											className='text-white hover:text-blue-200 cursor-pointer'
+										>
+											Logout
+										</a>
+									</li>
+								)}
 							</ul>
 						</div>
 					)}

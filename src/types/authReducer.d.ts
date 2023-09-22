@@ -5,7 +5,6 @@ type AuthAction =
 type AuthState = {
 	loggedIn: boolean;
 	token: string | null;
-	username: string;
 	name: string;
 	email: string;
 };
